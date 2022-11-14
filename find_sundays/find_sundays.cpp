@@ -47,8 +47,8 @@ void findSundays(Month* months,date startDate,date endDate) {
             first_month_of_year = 0;
         }
         for (int j = first_month_of_year; j < NUMBEROFMONTHS; j++) {
-            if (months[j].getName() == "Sub") {   // subat ayinin 4 yilda 29 cekmesi, 1900 yilinda subat ayi 29 cekmemistir!
-                if (i % 100 == 0 && i % 400 !=0)
+            if (months[j].getName() == "Sub") {        // subat ayinin 4 yilda 29 cekmesi
+                if (i % 100 == 0 && i % 400 !=0)       // 100e kalansiz, 400e kalanli bolunen yillara artik gun eklenmez
                     months[j].setNumberOfDays(28);
                 else if (i % 4 == 0) 
                     months[j].setNumberOfDays(29);
