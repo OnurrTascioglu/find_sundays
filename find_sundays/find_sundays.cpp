@@ -32,27 +32,34 @@ private:
 };
 
 void findSundays(Month* months,date startDate,date endDate) {
-    int count = 0;
-    for (int i = 0; i < NUMBEROFDAYS; i++) {  // ilk pazar
-        if (startDate.start_day != days[i]) count++;
-        else break;
+    int day = 0;
+    for (int i = NUMBEROFDAYS ; i > 0; i--) {  
+        if (startDate.start_day == days[i-1]) day = NUMBEROFDAYS - i;  // baslangic gununun pazar gunune ne kadar uzak oldugu bulunur
     }
 
-    int total_years = endDate.year - startDate.year;
-    int day = count;
+    int first_month_of_year = 0;
     for (int i = startDate.year; i <= endDate.year; i++) {
-        for (int j = 0; j < NUMBEROFMONTHS; j++) {
-            if (months[j].getName() == "Sub" && i != 1900) {   // subat ayýnýn 4 yýlda bir kontrol edilmesi, 1900 yýlýnda þubat ayý 29 çekmemiþtir!
-                if (i % 4 == 0) 
+        if (i == startDate.year) {                 // ilk yilda baslagic tarihi atanir.
+            first_month_of_year = startDate.month-1;
+            day += startDate.day;                  // ilk pazar gununun tarihi              
+        }
+        else {
+            first_month_of_year = 0;
+        }
+        for (int j = first_month_of_year; j < NUMBEROFMONTHS; j++) {
+            if (months[j].getName() == "Sub") {   // subat ayinin 4 yilda 29 cekmesi, 1900 yilinda subat ayi 29 cekmemistir!
+                if (i % 100 == 0 && i % 400 !=0)
+                    months[j].setNumberOfDays(28);
+                else if (i % 4 == 0) 
                     months[j].setNumberOfDays(29);
                 else 
                     months[j].setNumberOfDays(28);
             }
             std::cout << day << "." << months[j].getName() << "." << i << std::endl;
             while (true) {
-                day = day + NUMBEROFDAYS;
-                if (day > months[j].GetNumberOfDays()) {
-                    day = day % months[j].GetNumberOfDays();
+                day += NUMBEROFDAYS;
+                if (day > months[j].GetNumberOfDays()) {   
+                    day %=  months[j].GetNumberOfDays();     //bir sonraki ayin ilk pazari
                     break;
                 }
             }
@@ -62,10 +69,10 @@ void findSundays(Month* months,date startDate,date endDate) {
 
 int main()
 {
-    startDate.day = 1;
-    startDate.month = 1;
+    startDate.day = 13;
+    startDate.month = 6;
     startDate.year = 1900;
-    startDate.start_day = "Pzt";
+    startDate.start_day = "Car";
 
     endDate.day = 31;
     endDate.month = 12;
