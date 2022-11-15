@@ -37,7 +37,9 @@ void findSundays(date startDate,date endDate) {
                 else 
                     num_of_days[j] = 28;
             }
-            std::cout << day << "." << months[j] << "." << i << std::endl;
+            if (day == 1) {           // ayin ilk gunu pazar olan olan aylar
+                std::cout << day << "." << months[j] << "." << i << std::endl;
+            }
             while (true) {
                 day += NUMBEROFDAYS;
                 if (day > num_of_days[j]) {
@@ -51,10 +53,10 @@ void findSundays(date startDate,date endDate) {
 
 int main()
 {
-    startDate.day = 13;
-    startDate.month = 6;
-    startDate.year = 1900;
-    startDate.start_day = "Car";
+    startDate.day = 1;
+    startDate.month = 1;
+    startDate.year = 1771;
+    startDate.start_day = "Sal";
 
     endDate.day = 31;
     endDate.month = 12;
