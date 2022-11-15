@@ -2,8 +2,8 @@
 #define NUMBEROFMONTHS 12
 #define NUMBEROFDAYS 7
 
-const std::string days[] = { "Pzt","Sal","Car","Per","Cum","Cmt","Pzr"};
-const std::string months[] = {"Oca","Sub","Mar","Nis","May","Haz","Tem", "Agu", "Eyl", "Eki","Kas","Ara"};
+std::string days[] = { "Pzt","Sal","Car","Per","Cum","Cmt","Pzr"};
+std::string months[] = {"Oca","Sub","Mar","Nis","May","Haz","Tem", "Agu", "Eyl", "Eki","Kas","Ara"};
 int num_of_days[] = {31,28,31,30,31,30,31,31,30,31,30,31};
 
 struct date{
@@ -13,25 +13,7 @@ struct date{
     std::string start_day;
 } startDate, endDate;
 
-class Month{
-public:
-    Month(){}
-    Month(std::string name, int number_of_days) {
-        this->name = name;
-        this->number_of_days = number_of_days;
-    }
-
-    void setName(std::string s) {name = s;}
-    std::string getName() {return name;}
-    void setNumberOfDays(int n) { number_of_days = n;}
-    int GetNumberOfDays() {return number_of_days;}
-
-private:
-    std::string name;
-    int number_of_days = 0 ;
-};
-
-void findSundays(Month* months,date startDate,date endDate) {
+void findSundays(date startDate,date endDate) {
     int day = 0;
     for (int i = NUMBEROFDAYS ; i > 0; i--) {  
         if (startDate.start_day == days[i-1]) day = NUMBEROFDAYS - i;  // baslangic gununun pazar gunune ne kadar uzak oldugu bulunur
@@ -47,19 +29,19 @@ void findSundays(Month* months,date startDate,date endDate) {
             first_month_of_year = 0;
         }
         for (int j = first_month_of_year; j < NUMBEROFMONTHS; j++) {
-            if (months[j].getName() == "Sub") {        // subat ayinin 4 yilda 29 cekmesi
+            if (months[j] == "Sub") {        // subat ayinin 4 yilda 29 cekmesi
                 if (i % 100 == 0 && i % 400 !=0)       // 100e kalansiz, 400e kalanli bolunen yillara artik gun eklenmez
-                    months[j].setNumberOfDays(28);
+                    num_of_days[j] = 28;
                 else if (i % 4 == 0) 
-                    months[j].setNumberOfDays(29);
+                    num_of_days[j] = 29;
                 else 
-                    months[j].setNumberOfDays(28);
+                    num_of_days[j] = 28;
             }
-            std::cout << day << "." << months[j].getName() << "." << i << std::endl;
+            std::cout << day << "." << months[j] << "." << i << std::endl;
             while (true) {
                 day += NUMBEROFDAYS;
-                if (day > months[j].GetNumberOfDays()) {   
-                    day %=  months[j].GetNumberOfDays();     //bir sonraki ayin ilk pazari
+                if (day > num_of_days[j]) {
+                    day %= num_of_days[j];     //bir sonraki ayin ilk pazari
                     break;
                 }
             }
@@ -78,13 +60,7 @@ int main()
     endDate.month = 12;
     endDate.year = 2022;
 
-    Month m[NUMBEROFMONTHS];
-
-    for (int i = 0; i < NUMBEROFMONTHS; i++) {
-        m[i] = Month(months[i], num_of_days[i]);
-    }
-
-    findSundays(m, startDate,endDate);
+    findSundays(startDate,endDate);
 
     return 0;
 }
