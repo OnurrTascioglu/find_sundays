@@ -55,7 +55,7 @@ int main()
 {
     startDate.day = 1;
     startDate.month = 1;
-    startDate.year = 1900;
+    startDate.year = 1900; 
     startDate.start_day = "Pzt";
 
     endDate.day = 31;
