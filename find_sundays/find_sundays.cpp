@@ -60,7 +60,7 @@ int main()
 
     endDate.day = 31;
     endDate.month = 12;
-    endDate.year = 2000;
+    endDate.year = 2000; 
 
     findSundays(startDate,endDate);
 
