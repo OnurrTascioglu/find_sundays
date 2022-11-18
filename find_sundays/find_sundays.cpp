@@ -55,12 +55,12 @@ int main()
 {
     startDate.day = 1;
     startDate.month = 1;
-    startDate.year = 1771;
-    startDate.start_day = "Sal";
+    startDate.year = 1900;
+    startDate.start_day = "Pzt";
 
     endDate.day = 31;
     endDate.month = 12;
-    endDate.year = 2022;
+    endDate.year = 2000;
 
     findSundays(startDate,endDate);
 
